@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block title %}MMT-UI{% endblock %}
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg">
+      <h2><span class='fixed'>MMT-UI > Select Experiment</span></h2>
+    </div>
+  </div>
+  <div class="row">
+    <ul class="tasktree">
+      {% for task, testsets in tasks.items() %}
+      <li>{{ task }}
+        <ul class="subtasktree">
+          {% for name,(_,link,_) in testsets.items() %}
+            <li><a href="{{ link }}">{{ name }}</a></li>
+          {% endfor %}
+        </ul>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+{% endblock %}
+
+

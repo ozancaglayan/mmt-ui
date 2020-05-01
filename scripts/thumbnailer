@@ -1,0 +1,30 @@
+#!/usr/bin/env python
+import pickle as pkl
+from io import BytesIO
+import base64
+from PIL import Image
+
+from torchvision import transforms
+from pathlib import Path
+
+
+img_root = Path('/lium/raid01_a/caglayan/data/multi30k/images')
+
+
+if __name__ == '__main__':
+    transform = []
+    transform.append(transforms.Resize(256))
+    transform.append(transforms.CenterCrop(256))
+    transform = transforms.Compose(transform)
+
+    dic = {}
+
+    for split in img_root.glob('test_*'):
+        for img in split.glob('*.jpg'):
+            x = transform(Image.open(img).convert('RGB'))
+            with BytesIO() as buff:
+                x.save(buff, 'jpeg')
+                dic['{}/{}'.format(split.name, img.name)] = base64.b64encode(buff.getvalue()).decode()
+
+    # Image full paths in order
+    pkl.dump(dic, open('data/flickr+coco.images.pkl', 'wb'))

@@ -1,0 +1,88 @@
+body {
+  padding: 5px;
+}
+
+span.task {
+  color: #b30059;
+}
+
+span.table_title {
+  font-family: Monospace;
+}
+
+span.testset {
+  font-size: 0.7em;
+  color: #666;
+}
+
+span.src {
+  font-family: Monospace;
+}
+
+span.delta {
+  font-size: 1.1em;
+}
+
+span.sys {
+  font-family:Monospace;
+  color: blue;
+}
+
+span.bsl {
+  font-family:Monospace;
+  color: red;
+}
+
+span.ref {
+  font-family:Monospace;
+  color: green;
+}
+
+table.systems {
+  font-size: 14px;
+  display: none;
+}
+
+table.dataTable {
+  font-size: 13px;
+  line-height: 1;
+}
+
+table.multeval {
+  display:none;
+}
+
+table.dataTable tbody tr.selected a {
+  color: white;
+}
+
+table.dataTable tbody tr.selected {
+  color: white;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+a:visited {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+a:active {
+    text-decoration: none;
+}
+
+ul.tasktree {
+  list-style-type: square;
+  font-size: 2.2em;
+  font-family: Monospace;
+}
+
+ul.tasktree {
+  list-style-type: square;
+  font-size: 1.4em;
+}

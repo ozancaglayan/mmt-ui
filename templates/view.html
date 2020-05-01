@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+{% block title %}{{task}} results on {{testset}}{% endblock %}
+{% block content %}
+<script type="text/javascript">
+  $(document).ready( function () {
+    var url = window.location.href;
+    var cur_sys = url.substring(url.lastIndexOf('/')+1);
+
+    $('table.multeval').DataTable({
+      "pageLength": 50,
+      "initComplete": function () {
+        $('table.multeval').show();
+      },
+      "createdRow": function( row, data, dataIndex ) {
+        if (data[0].includes(">" + cur_sys + "<")) {
+          $(row).addClass("selected");
+        }
+    }});
+  });
+</script>
+
+<div class="container">
+  <div class="row"><div class="col-lg"><h2><a href='/'>Home</a> | <span class='task'>{{task}}</span> results on <span class='testset'>{{testset}}</span></h2></div></div>
+  <div class="row">
+    <div class="col-lg multeval">
+	    {{ results_table|safe }}
+    </div>
+  </div>
+  {% if system %}
+  <script type="text/javascript">
+    $(document).ready( function () {
+      $('table.systems').DataTable( {
+        "search": {
+          "smart": false,
+          "regex": true,
+            },
+        "columns": [
+          null,
+          {"orderable": false },
+          {"orderable": false },
+          null,
+          null,
+          null,
+        ],
+        "processing": true,
+        "initComplete": function () {
+          $('#table_title').text($('#table_title').text().slice(12));
+          $('table.systems').show();
+        },
+      })});
+  </script>
+  <br/>
+  <div class="row"><div class="col-lg"><h4><span id='table_title'>Loading --> {{system}} <span style='color:#666'>vs</span> {{baseline}} (baseline)</span></h4></div></div>
+  <div class="row">
+    <div class="col-lg comparison">
+      {{ systems_table|safe }}
+    </div>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}
+
+
