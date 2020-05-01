@@ -12,14 +12,13 @@ from lib import parse_multeval_results_table, parse_ranksys
 from utils import natural_sort
 
 
-FLASK_CONFIG = {
-    "DEBUG": True,              # some Flask specific configs
+CONFIG = {
     "CACHE_TYPE": "simple",     # Flask-Caching related configs
     "CACHE_DEFAULT_TIMEOUT": 36000,
 }
 
 app = Flask('mmt-ui')
-app.config.from_mapping(FLASK_CONFIG)
+app.config.from_mapping(CONFIG)
 cache = Cache(app)
 
 
@@ -96,10 +95,14 @@ def main():
     parser.add_argument('-r', '--results', help='Results folder',
                         required=True, type=str)
 
-    args = parser.parse_args()
-    app.config['results'] = args.results
-    app.run(host='0.0.0.0', port=8080, threaded=True)
+    parser.add_argument('-d', '--debug', help='Debug mode for Flask',
+                        action='store_true')
 
+    args = parser.parse_args()
+
+    app.config['results'] = args.results
+    app.config['DEBUG'] = args.debug
+    app.run(host='0.0.0.0', port=8080, threaded=True)
 
 if __name__ == '__main__':
     main()

@@ -8,9 +8,6 @@
 
     $('table.multeval').DataTable({
       "pageLength": 50,
-      "initComplete": function () {
-        $('table.multeval').show();
-      },
       "createdRow": function( row, data, dataIndex ) {
         if (data[0].includes(">" + cur_sys + "<")) {
           $(row).addClass("selected");

@@ -49,7 +49,6 @@ table.dataTable {
 }
 
 table.multeval {
-  display:none;
 }
 
 table.dataTable tbody tr.selected a {
