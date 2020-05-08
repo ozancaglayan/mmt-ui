@@ -50,7 +50,7 @@ This simple web interface allows you to parse and visualize the `ranksys` folder
 After installing the runtime dependencies with `pip install -r requirements.txt`, run the following command and fire up your browser to point at `localhost:8080`.
 
 ```
-$ python src/server.py -r <results folder>
+$ python server.py -r <results folder>
 ```
 
 ## Example

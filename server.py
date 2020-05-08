@@ -8,8 +8,8 @@ from pathlib import Path
 from flask import render_template, Flask, url_for
 from flask_caching import Cache
 
-from lib import parse_multeval_results_table, parse_ranksys
-from utils import natural_sort
+from src.lib import parse_multeval_results_table, parse_ranksys
+from src.utils import natural_sort
 
 
 CONFIG = {
