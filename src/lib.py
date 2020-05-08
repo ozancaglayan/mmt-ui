@@ -3,6 +3,7 @@
 import html
 import pickle as pkl
 from collections import OrderedDict
+from pathlib import Path
 
 import pandas as pd
 from flask import url_for
@@ -12,7 +13,9 @@ from utils import fopen, get_image_db
 pd.set_option('display.max_colwidth', None)
 pd.set_option('display.max_columns', None)
 IMAGE_DB = get_image_db()
-THUMBS = pkl.load(open('data/flickr+coco.images.pkl', 'rb'))
+CWD = Path(__file__).parent
+THUMB_PATH = f"{CWD}/../data/flickr+coco.images.pkl"
+THUMBS = pkl.load(open(THUMB_PATH, 'rb'))
 
 
 def parse_ranksys(ranksys_root, sys_name, test_set, src_sents):
