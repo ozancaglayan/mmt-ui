@@ -94,7 +94,8 @@ def main():
 
     parser.add_argument('-r', '--results', help='Results folder',
                         required=True, type=str)
-
+    parser.add_argument('-p', '--port', help='Server port', default=8086)
+    parser.add_argument('-n', '--host', help='Host server IP', default='0.0.0.0')
     parser.add_argument('-d', '--debug', help='Debug mode for Flask',
                         action='store_true')
 
@@ -102,7 +103,7 @@ def main():
 
     app.config['results'] = args.results
     app.config['DEBUG'] = args.debug
-    app.run(host='0.0.0.0', port=8080, threaded=True)
+    app.run(host=args.host, port=args.port, threaded=True)
 
 if __name__ == '__main__':
     main()
