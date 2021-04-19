@@ -44,17 +44,19 @@ def parse_ranksys(ranksys_root, sys_name, test_set, src_sents):
             line = line.strip()
 
             if line.startswith('SENT'):
+                out_str = ""
                 parts = line.replace('\t', ' ').split()
                 sent_idx = int(parts[1])
 
+                info_dict = {'ID': sent_idx, 'IMAGE': img_names[sent_idx]}
+
                 # parse delta metrics
                 # Order is: baseline, variant, delta
-                # FIXME: Assumes a predefined set of multeval metrics
-                meteors = float(parts[3]), float(parts[5]), float(parts[7])
-                bleus = float(parts[9]), float(parts[11]), float(parts[13])
-                ters = float(parts[15]), float(parts[17]), float(parts[19])
-
-                out_str = ""
+                order = [name[:-1].upper() for name in parts[2::6]]
+                deltas = [float(d) for d in parts[7::6]]
+                delta_dict = {}
+                for metric, delta in zip(order, deltas):
+                    delta_dict[f'\u0394{metric}'] = format_delta(delta)
 
                 if src_sents is not None:
                     out_str += format_sent(src_sents[sent_idx], 'SRC')
@@ -70,14 +72,18 @@ def parse_ranksys(ranksys_root, sys_name, test_set, src_sents):
                 out_str += format_sent(line, 'REF')
 
                 # Parsing completed for this sentence
-                result.append(OrderedDict({
-                        'ID': sent_idx,
-                        'IMAGE': img_names[sent_idx],
-                        'SENTENCES': out_str,
-                        '\u0394METEOR': format_delta(meteors[2]),
-                        '\u0394BLEU': format_delta(bleus[2]),
-                        '\u0394TER': format_delta(ters[2]),
-                    }))
+                info_dict['SENTENCES'] = out_str
+                info_dict.update(delta_dict)
+                result.append(info_dict)
+
+#                 result.append(OrderedDict({
+                        # 'ID': sent_idx,
+                        # 'IMAGE': img_names[sent_idx],
+                        # 'SENTENCES': out_str,
+                        # '\u0394METEOR': format_delta(meteors[2]),
+                        # '\u0394BLEU': format_delta(bleus[2]),
+                        # '\u0394TER': format_delta(ters[2]),
+                    # }))
 
     # Sort the test set
     result = sorted(result, key=lambda x: x['ID'])

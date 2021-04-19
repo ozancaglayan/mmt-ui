@@ -98,12 +98,19 @@ def main():
     parser.add_argument('-n', '--host', help='Host server IP', default='0.0.0.0')
     parser.add_argument('-d', '--debug', help='Debug mode for Flask',
                         action='store_true')
+    parser.add_argument('-D', '--deploy', help='Enable deployment server',
+                        action='store_true')
 
     args = parser.parse_args()
 
     app.config['results'] = args.results
     app.config['DEBUG'] = args.debug
-    app.run(host=args.host, port=args.port, threaded=True)
+
+    if args.deploy:
+        from waitress import serve
+        serve(app, host=args.host, port=args.port)
+    else:
+        app.run(host=args.host, port=args.port, threaded=True)
 
 if __name__ == '__main__':
     main()
