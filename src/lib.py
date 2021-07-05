@@ -35,8 +35,8 @@ def parse_ranksys(ranksys_root, sys_name, test_set, src_sents):
             return f'<span class="delta">{x}</span>'
 
     result = []
-    ranksys = list(ranksys_root.glob('{}.sortedby.*'.format(sys_name)))[0]
     img_names = IMAGE_DB[test_set]
+    ranksys = ranksys_root / f'{sys_name}.sortedby.meteor'
 
     with fopen(str(ranksys)) as f:
         sent_idx = None
