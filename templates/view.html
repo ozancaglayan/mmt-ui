@@ -27,17 +27,25 @@
   <script type="text/javascript">
     $(document).ready( function () {
       $('table.systems').DataTable( {
+        "responsive": true,
+        "fixedHeader": true,
         "search": {
           "smart": false,
           "regex": true,
             },
+        columnDefs: [
+          {
+            targets: -1,
+            className: 'dt-body-right'
+          }
+        ],
         "columns": [
-          null,
-          {"orderable": false },
-          {"orderable": false },
-          null,
-          null,
-          null,
+          null, <!-- ID -->
+          {"orderable": false }, <!-- Image -->
+          {"orderable": false }, <!-- Sentences -->
+          null, <!-- Meteor -->
+          null, <!-- BLEU -->
+          null, <!-- TER -->
         ],
         "processing": true,
         "initComplete": function () {
